@@ -607,28 +607,18 @@ namespace LibGit2Sharp.Core
 
         [DllImport(libgit2)]
         internal static extern int git_merge(
-            out GitMergeResultHandle mergeResult,
             RepositorySafeHandle repo,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] [In] IntPtr[] their_heads,
+            [In] IntPtr[] their_heads,
             UIntPtr their_heads_len,
-            ref GitMergeOpts given_opts);
+            ref GitMergeOpts merge_opts,
+            ref GitCheckoutOpts checkout_opts);
 
         [DllImport(libgit2)]
-        internal static extern int git_merge_result_is_uptodate(
-            GitMergeResultHandle merge_result);
-
-        [DllImport(libgit2)]
-        internal static extern int git_merge_result_is_fastforward(
-            GitMergeResultHandle merge_result);
-
-        [DllImport(libgit2)]
-        internal static extern int git_merge_result_fastforward_id(
-            out GitOid oid,
-            GitMergeResultHandle merge_result);
-
-        [DllImport(libgit2)]
-        internal static extern void git_merge_result_free(
-            IntPtr merge_result);
+        internal static extern int git_merge_analysis(
+            out GitMergeAnalysis status_out,
+            RepositorySafeHandle repo,
+            [In] IntPtr[] their_heads,
+            int their_heads_len);
 
         [DllImport(libgit2)]
         internal static extern void git_merge_head_free(
@@ -977,11 +967,11 @@ namespace LibGit2Sharp.Core
             [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string url);
 
         [DllImport(libgit2)]
-        internal static extern int git_remote_create_inmemory(
+        internal static extern int git_remote_create_anonymous(
             out RemoteSafeHandle remote,
             RepositorySafeHandle repo,
-            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string refspec,
-            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string url);
+            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string url,
+            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string refspec);
 
 
         [DllImport(libgit2)]
