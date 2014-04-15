@@ -36,6 +36,7 @@ namespace LibGit2Sharp.Core
 	/// <summary>
 	/// The results of `git_merge_analysis` indicate the merge opportunities.
 	/// </summary>
+	[Flags]
     internal enum GitMergeAnalysis
     {
         /// <summary>
